@@ -1,4 +1,5 @@
 # Copyright 2016-2017 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2019 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': "Stock Change Quantity Reason",
@@ -13,6 +14,8 @@
         'stock',
     ],
     'data': [
+        'views/base_config_view.xml',
+        'views/stock_change_product_reason_view.xml',
         'wizard/stock_product_change_qty.xml'
     ],
     'installable': True,
