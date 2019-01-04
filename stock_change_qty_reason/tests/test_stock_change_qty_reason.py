@@ -54,7 +54,6 @@ class TestStockQuantityChangeReason(SavepointCase):
         product5 = self._create_product('product_product_5')
         product6 = self._create_product('product_product_6')
 
-
         # update qty on hand and add reason
         self._product_change_qty(product2, 10, 'product_2_reason')
         self._product_change_qty(product3, 0, 'product_3_reason')
@@ -88,7 +87,6 @@ class TestStockQuantityChangeReason(SavepointCase):
         # create products
         product2 = self._create_product('product_product_2')
         product3 = self._create_product('product_product_3')
-
 
         # update qty on hand and add reason
         self._product_change_qty(product2, 10, reason.name, reason)

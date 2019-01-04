@@ -15,7 +15,7 @@ class StockChangeProductQty(models.TransientModel):
                          help='Type in a reason for the '
                          'product quantity change')
     encoded_reason = fields.Many2one('stock.change.product.reason',
-                                       required=False)
+                                     required=False)
 
     company_id = fields.Many2one(
         comodel_name='res.company',
@@ -37,7 +37,6 @@ class StockChangeProductQty(models.TransientModel):
         else:
             this = self
         return super(StockChangeProductQty, this).change_product_qty()
-
 
     @api.onchange('encoded_reason')
     def onchange_encoded_reason(self):
