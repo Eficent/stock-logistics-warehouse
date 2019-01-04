@@ -13,7 +13,7 @@
                 <field name="new_quantity" position="after">
                     <field name="reason" attrs=
                         "{'required':[('qty_reason_encoded','=',False)]}"/>
-                    <field name="encoded_reason" attrs=
+                    <field name="encoded_reason_id" attrs=
                         "{'required':[('qty_reason_encoded','=',True)],
                           'invisible':[('qty_reason_encoded','=',False)]}"/>
                     <field name="company_id" invisible="1"/>

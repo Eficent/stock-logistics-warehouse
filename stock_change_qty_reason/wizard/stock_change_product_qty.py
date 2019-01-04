@@ -14,8 +14,8 @@ class StockChangeProductQty(models.TransientModel):
     reason = fields.Char('Reason',
                          help='Type in a reason for the '
                          'product quantity change')
-    encoded_reason = fields.Many2one('stock.change.product.reason',
-                                     required=False)
+    encoded_reason_id = fields.Many2one('stock.change.product.reason',
+                                        required=False)
 
     company_id = fields.Many2one(
         comodel_name='res.company',
@@ -25,20 +25,21 @@ class StockChangeProductQty(models.TransientModel):
     qty_reason_encoded = fields.Boolean(
         related="company_id.qty_reason_encoded")
 
-    @api.multi
-    def change_product_qty(self):
-        """Function to super change_product_qty"""
+    def _action_start_line(self):
+        res = super(StockChangeProductQty)._action_start_line()
         if self.company_id.qty_reason_encoded and self.encoded_reason:
-            this = self.with_context(
-                change_quantity_reason=self.reason,
-                change_reason_id=self.encoded_reason.id)
+            ext_res = {
+                'encoded_reason_id': self.encoded_reason_id,
+                'reason': self.encoded_reason_id.name,
+            }
+            res = {**res, **ext_res}
         elif self.reason:
-            this = self.with_context(change_quantity_reason=self.reason)
-        else:
-            this = self
-        return super(StockChangeProductQty, this).change_product_qty()
+            ext_res = {'reason': self.reason, }
+            res = {**res, **ext_res}
+        return res
 
-    @api.onchange('encoded_reason')
+
+    @api.onchange('encoded_reason_id')
     def onchange_encoded_reason(self):
-        if self.encoded_reason:
-            self.reason = self.encoded_reason.name
+        if self.encoded_reason_id:
+            self.reason = self.encoded_reason_id.name
