@@ -3,4 +3,4 @@
 purchase-workflow
 web
 server-ux
-stock-logistics-warehouse https://github.com/Eficent/stock-logistics-workflow.git 11.0-imp-stock_cange_qty_reason
+stock-logistics-warehouse https://github.com/Eficent/stock-logistics-warehouse.git 11.0-imp-stock_cange_qty_reason
