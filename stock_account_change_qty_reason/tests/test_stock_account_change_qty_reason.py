@@ -59,7 +59,7 @@ class TestStockAccountChangeQtyReason(SavepointCase):
             'name': name,
             'categ_id': self.category.id,
             'type': 'product',
-            'standard_price': 100,})
+            'standard_price': 100, })
 
     def _product_change_qty(self, product, new_qty, reason,
                             encoded_reason=None):
@@ -86,7 +86,7 @@ class TestStockAccountChangeQtyReason(SavepointCase):
 
         # check stock moves and account moves created
         stock_move = self.env['stock.move'].search([('product_id', '=',
-                                                      product.id)])
+                                                     product.id)])
         account_move = self.env['account.move'].search(
             [('stock_move_id', '=', stock_move.id)])
 

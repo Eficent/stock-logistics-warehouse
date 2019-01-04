@@ -7,6 +7,6 @@ class StockAccountInventoryChangeReason(models.Model):
     _inherit = 'stock.change.product.reason'
 
     account_reason_input_id = fields.Many2one('account.account',
-                                               string='Account Reason Input')
+                                              string='Account Reason Input')
     account_reason_output_id = fields.Many2one('account.account',
                                                string='Account Reason Output')
