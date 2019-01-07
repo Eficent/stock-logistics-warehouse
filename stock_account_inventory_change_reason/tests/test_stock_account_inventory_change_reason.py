@@ -15,7 +15,7 @@ class TestStockInventoryChangeReason(SavepointCase):
         cls.product_product_model = cls.env['product.product']
         cls.product_category_model = cls.env['product.category']
         cls.wizard_model = cls.env['stock.change.product.qty']
-        cls.tabulated_reason = cls.env['stock.change.product.reason']
+        cls.tabulated_reason_id = cls.env['stock.inventory.line.reason']
 
         # INSTANCES
         cls.category = cls.product_category_model.create({
@@ -48,7 +48,7 @@ class TestStockInventoryChangeReason(SavepointCase):
             'reconcile': True
         })
 
-        cls.reason = cls.tabulated_reason.create({
+        cls.reason_id = cls.tabulated_reason.create({
             'name': 'Test Reason',
             'description': 'Test Reason Description',
             'account_reason_input_id': cls.account_input.id,
@@ -85,7 +85,7 @@ class TestStockInventoryChangeReason(SavepointCase):
         product = self._create_product('product_product')
 
         # update qty on hand and add reason
-        self._product_change_qty(product, 10, self.reason.name, self.reason)
+        self._product_change_qty(product, 10, self.reason_id.name, self.reason)
 
         # check stock moves created
         stock_move2 = self.env['stock.move'].search([('product_id', '=',

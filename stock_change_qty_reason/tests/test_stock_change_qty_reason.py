@@ -16,7 +16,7 @@ class TestStockQuantityChangeReason(SavepointCase):
         cls.product_product_model = cls.env['product.product']
         cls.product_category_model = cls.env['product.category']
         cls.wizard_model = cls.env['stock.change.product.qty']
-        cls.encoded_reason_id = cls.env['stock.change.product.reason']
+        cls.encoded_reason_id = cls.env['stock.inventory.line.reason']
 
         # INSTANCES
         cls.category = cls.product_category_model.create({
@@ -28,13 +28,14 @@ class TestStockQuantityChangeReason(SavepointCase):
             'categ_id': self.category.id,
             'type': 'product'})
 
-    def _product_change_qty(self, product, new_qty, reason,
-                            encoded_reason=None):
+    def _product_change_qty(self, product, new_qty, reason_id,
+                            encoded_reason_id=None):
         wizard = self.wizard_model.create({
             'product_id': product.id,
             'new_quantity': new_qty,
-            'reason': reason,
-            'encoded_reason': encoded_reason_id.id if encoded_reason_id else False
+            'reason_id': reason_id,
+            'encoded_reason':
+                encoded_reason_id.id if encoded_reason_id else False
         })
         wizard.change_product_qty()
 

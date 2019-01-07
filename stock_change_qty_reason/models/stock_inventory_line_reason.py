@@ -3,9 +3,9 @@
 from odoo import fields, models
 
 
-class StockChangeProductReason(models.Model):
+class StockInventoryLineReason(models.Model):
 
-    _name = 'stock.change.product.reason'
+    _name = 'stock.inventory.line.reason'
 
     name = fields.Char('Reason Name', unique=True)
     description = fields.Char('Reason Description')

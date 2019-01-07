@@ -16,7 +16,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/base_config_view.xml',
-        'views/stock_change_product_reason_view.xml',
+        'views/stock_inventory_line_reason_view.xml',
         'views/stock_inventory_line_view.xml',
         'wizard/stock_product_change_qty.xml'
     ],

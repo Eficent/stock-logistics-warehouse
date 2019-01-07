@@ -4,7 +4,7 @@
 <odoo>
     <record id="view_encoded_reason" model="ir.ui.view">
         <field name="name">Encoded Reason</field>
-        <field name="model">stock.change.product.reason</field>
+        <field name="model">stock.inventory.line.reason</field>
         <field name="arch" type="xml">
             <form string="Encoded Reason">
                 <group>

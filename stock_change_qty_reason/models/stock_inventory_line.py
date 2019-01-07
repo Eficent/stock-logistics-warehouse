@@ -8,13 +8,13 @@ class StockInventoryLine(models.Model):
     """Class to inherit model stock.inventory.line"""
     _inherit = "stock.inventory.line"
 
-    reason = fields.Char('Reason',
+    reason_id = fields.Char('Reason',
                          help='Type in a reason for the '
                               'product quantity change')
-    encoded_reason_id = fields.Many2one('stock.change.product.reason',
+    encoded_reason_id = fields.Many2one('stock.inventory.line.reason',
                                         required=False)
 
     @api.onchange('encoded_reason_id')
     def onchange_encoded_reason(self):
         if self.encoded_reason_id:
-            self.reason = self.encoded_reason_id.name
+            self.reason_id = self.encoded_reason_id.name

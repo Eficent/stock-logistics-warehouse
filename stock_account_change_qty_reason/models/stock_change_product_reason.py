@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class StockAccountInventoryChangeReason(models.Model):
-    _inherit = 'stock.change.product.reason'
+    _inherit = 'stock.inventory.line.reason'
 
     account_reason_input_id = fields.Many2one('account.account',
                                               string='Account Reason Input')

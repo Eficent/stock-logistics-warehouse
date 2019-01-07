@@ -6,7 +6,7 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    encoded_reason_id = fields.Many2one('stock.change.product.reason')
+    encoded_reason_id = fields.Many2one('stock.inventory.line.reason')
 
     @api.multi
     def _get_accounting_data_for_valuation(self):

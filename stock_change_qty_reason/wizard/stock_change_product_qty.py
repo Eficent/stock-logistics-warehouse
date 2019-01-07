@@ -11,10 +11,10 @@ class StockChangeProductQty(models.TransientModel):
     """Class to inherit model stock.change.product.qty"""
     _inherit = 'stock.change.product.qty'
 
-    reason = fields.Char('Reason',
+    reason_id = fields.Char('Reason',
                          help='Type in a reason for the '
                          'product quantity change')
-    encoded_reason_id = fields.Many2one('stock.change.product.reason',
+    encoded_reason_id = fields.Many2one('stock.inventory.line.reason',
                                         required=False)
 
     company_id = fields.Many2one(
@@ -30,16 +30,15 @@ class StockChangeProductQty(models.TransientModel):
         if self.company_id.qty_reason_encoded and self.encoded_reason:
             ext_res = {
                 'encoded_reason_id': self.encoded_reason_id,
-                'reason': self.encoded_reason_id.name,
+                'reason_id': self.encoded_reason_id.name,
             }
             res = {**res, **ext_res}
         elif self.reason:
-            ext_res = {'reason': self.reason, }
+            ext_res = {'reason_id': self.reason_id, }
             res = {**res, **ext_res}
         return res
-
 
     @api.onchange('encoded_reason_id')
     def onchange_encoded_reason(self):
         if self.encoded_reason_id:
-            self.reason = self.encoded_reason_id.name
+            self.reason_id = self.encoded_reason_id.name

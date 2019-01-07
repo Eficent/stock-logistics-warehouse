@@ -14,7 +14,7 @@ class TestStockAccountChangeQtyReason(SavepointCase):
         cls.product_product_model = cls.env['product.product']
         cls.product_category_model = cls.env['product.category']
         cls.wizard_model = cls.env['stock.change.product.qty']
-        cls.encoded_reason = cls.env['stock.change.product.reason']
+        cls.encoded_reason_id = cls.env['stock.inventory.line.reason']
 
         # INSTANCES
         cls.category = cls.product_category_model.create({
@@ -47,7 +47,7 @@ class TestStockAccountChangeQtyReason(SavepointCase):
             'reconcile': True
         })
 
-        cls.reason = cls.encoded_reason.create({
+        cls.reason_id = cls.encoded_reason.create({
             'name': 'Test Reason',
             'description': 'Test Reason Description',
             'account_reason_input_id': cls.account_input.id,
@@ -61,11 +61,11 @@ class TestStockAccountChangeQtyReason(SavepointCase):
             'type': 'product',
             'standard_price': 100, })
 
-    def _product_change_qty(self, product, new_qty, reason,
+    def _product_change_qty(self, product, new_qty, reason_id,
                             encoded_reason=None):
         wizard = self.wizard_model.create({'product_id': product.id,
                                            'new_quantity': new_qty,
-                                           'reason': reason,
+                                           'reason_id': reason_id,
                                            'encoded_reason':
                                                encoded_reason.id
                                                if encoded_reason else False
@@ -82,7 +82,8 @@ class TestStockAccountChangeQtyReason(SavepointCase):
         product = self._create_product('product_product')
 
         # update qty on hand and add reason
-        self._product_change_qty(product, 10, self.reason.name, self.reason)
+        self._product_change_qty(product, 10, self.reason_id.name,
+                                 self.reason_id)
 
         # check stock moves and account moves created
         stock_move = self.env['stock.move'].search([('product_id', '=',
