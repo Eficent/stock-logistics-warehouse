@@ -21,23 +21,24 @@ class StockMove(models.Model):
                 last_included = 0
                 try:
                     for line in rec.move_line_ids:
+                        serial = line.lot_name or line.lot_id.name
                         if not last_serial:
-                            last_serial = int(line.lot_name)
-                            rec.lot_range = line.lot_name
-                            last_included = last_serial
-                        elif int(line.lot_name) - last_serial == 1:
-                            last_serial = int(line.lot_name)
+                            last_serial = rec.lot_range = last_included = \
+                                serial
+                        elif int(serial) - int(last_serial) == 1:
+                            last_serial = serial
                         else:
                             if last_included != last_serial:
                                 rec.lot_range += " - %s,\n%s" % (
-                                    last_serial, int(line.lot_name))
-                                last_included = int(line.lot_name)
-                            elif last_included != int(line.lot_name):
-                                rec.lot_range += ",\n%s" % (int(line.lot_name))
-                                last_included = int(line.lot_name)
-                            last_serial = int(line.lot_name)
+                                    last_serial, serial)
+                                last_included = serial
+                            elif last_included != serial:
+                                rec.lot_range += ",\n%s" % serial
+                                last_included = serial
+                            last_serial = serial
                     if last_included != last_serial:
-                        rec.lot_range += " - %s," % last_serial
+                        rec.lot_range += " - %s" % last_serial
                 except ValueError:
                     for line in rec.move_line_ids:
-                        rec.lot_range += "%s,\n" % line.lot_name
+                        serial = line.lot_name or line.lot_id.name
+                        rec.lot_range += "%s,\n" % serial
