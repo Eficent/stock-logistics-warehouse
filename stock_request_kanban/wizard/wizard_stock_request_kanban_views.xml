@@ -23,17 +23,41 @@
                      attrs="{'invisible':[('status_state', '=', 0)]}">
                     <bold><field name="status"/></bold>
                 </div>
+                <field name="_barcode_scanned" widget="barcode_handler"
+                       invisible="1"/>
+                <field name="stock_request_ids" readonly="True">
+                    <tree string="Stock Requests">
+                        <field name="kanban_id"/>
+                        <field name="name"/>
+                        <field name="warehouse_id" groups="stock.group_stock_multi_locations"/>
+                        <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                        <field name="product_id"/>
+                        <field name="product_uom_id"
+                               options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
+                        <field name="product_uom_qty"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
                 <field name="status_state" invisible="1"/>
                 <field name="kanban_id" invisible="1"/>
                 <field name="stock_request_id" invisible="1"/>
-                <field name="_barcode_scanned" widget="barcode_handler"
-                       invisible="1"/>
+                <field name="stock_requests" invisible="1"/>
                 <footer>
                     <button
                             name="action_cancel"
                             string="Close"
                             class="oe_link"
                             special="cancel"
+                    />
+                    <button type="object"
+                                name="action_view_stock_requests"
+                                string="View Stock Requests"
+                                class="btn-primary"
+                    />
+                    <button type="object"
+                                name="action_confirm_stock_requests"
+                                string="Confirm Stock Requests"
+                                class="btn-primary"
                     />
                 </footer>
             </form>
