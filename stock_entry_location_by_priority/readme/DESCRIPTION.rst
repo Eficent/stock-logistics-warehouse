@@ -1,0 +1,1 @@
+This module adds a entry priority field on stock locations, select the quant at the location with more priority with available capacity.

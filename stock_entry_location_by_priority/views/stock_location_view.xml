@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="name">Location form - removal priority extension</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="putaway_strategy_id" position="after">
+                <field name="apply_entry_priority"/>
+                <field name="entry_priority"/>
+            </field>
+            <group name="localization" position="after">
+                <group string="Capacity" name="capacity">
+                    <field name="max_quantity"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>
