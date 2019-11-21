@@ -2,7 +2,7 @@
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models
+from odoo import models, api
 
 
 class StockMove(models.Model):
@@ -24,6 +24,11 @@ class StockMove(models.Model):
                         if child_location.max_quantity == 0.0 or \
                                 (child_location.max_quantity - on_hand_qty >=
                                  vals['product_uom_qty']):
+                            vals['location_dest_id'] = child_location.id
+                            break
+                        elif child_location.max_quantity - on_hand_qty > 0.0:
+                            vals['product_uom_qty'] = \
+                                child_location.max_quantity - on_hand_qty
                             vals['location_dest_id'] = child_location.id
                             break
         return vals
