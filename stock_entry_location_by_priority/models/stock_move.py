@@ -2,7 +2,11 @@
 #   (http://www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+<<<<<<< HEAD
 from odoo import models, api
+=======
+from odoo import models
+>>>>>>> 40752bd652af051134a8db4bc0a3ec3fbcbedacb
 
 
 class StockMove(models.Model):
@@ -31,4 +35,5 @@ class StockMove(models.Model):
                                 child_location.max_quantity - on_hand_qty
                             vals['location_dest_id'] = child_location.id
                             break
+
         return vals
