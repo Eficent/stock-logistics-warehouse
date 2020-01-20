@@ -1,4 +1,4 @@
-# Copyright 2019 Eficent Business and IT Consulting Services S.L.
+# Copyright 2019 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import ast
 
@@ -46,7 +46,6 @@ class TestStockOrderpointMoveLink(SavepointCase):
                             "picking_type_id": cls.env.ref(
                                 "stock.picking_type_internal"
                             ).id,
-                            "propagate": True,
                         },
                     )
                 ],
@@ -76,7 +75,6 @@ class TestStockOrderpointMoveLink(SavepointCase):
                             "picking_type_id": cls.env.ref(
                                 "stock.picking_type_internal"
                             ).id,
-                            "propagate": True,
                         },
                     )
                 ],

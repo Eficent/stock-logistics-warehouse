@@ -1,4 +1,4 @@
-# Copyright 2019 Eficent Business, IT Consulting Services, S.L., Ecosoft
+# Copyright 2019 ForgeFlow S.L. (https://www.forgeflow.com), Ecosoft
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo import models
 
@@ -14,8 +14,8 @@ class StockRule(models.Model):
         location_id,
         name,
         origin,
+        company_id,
         values,
-        group_id,
     ):
         vals = super()._get_stock_move_values(
             product_id,
@@ -24,8 +24,8 @@ class StockRule(models.Model):
             location_id,
             name,
             origin,
+            company_id,
             values,
-            group_id,
         )
         if "orderpoint_id" in values:
             vals["orderpoint_ids"] = [(4, values["orderpoint_id"].id)]

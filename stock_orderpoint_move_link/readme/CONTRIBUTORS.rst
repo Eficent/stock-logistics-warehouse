@@ -1,3 +1,3 @@
-* Jordi Ballester Alomar <jordi.ballester@eficent.com>
+* Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
 * Kitti Upariphutthiphong <kittiu@ecosoft.co.th>
-* Héctor Villarreal Ortega <hector.villarreal@eficent.com>
+* Héctor Villarreal Ortega <hector.villarreal@forgeflow.com>
