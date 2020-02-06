@@ -26,8 +26,7 @@
                 <field name="status_state" invisible="1"/>
                 <field name="kanban_id" invisible="1"/>
                 <field name="stock_request_id" invisible="1"/>
-                <field name="_barcode_scanned" widget="barcode_handler"
-                       invisible="1"/>
+                <field name="_barcode_scanned" widget="barcode_handler"/>
                 <footer>
                     <button
                             name="action_cancel"
@@ -44,6 +43,6 @@
                 name="Add Kanban"
                 res_model="wizard.stock.request.kanban"
                 view_mode="form"
-                target="new"/>
+                target="current"/>
 
 </odoo>
