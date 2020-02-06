@@ -26,8 +26,7 @@
                 <field name="status_state" invisible="1"/>
                 <field name="kanban_id" invisible="1"/>
                 <field name="inventory_kanban_id" invisible="1"/>
-                <field name="_barcode_scanned" widget="barcode_handler"
-                       invisible="1"/>
+                <field name="_barcode_scanned" widget="barcode_handler"/>
                 <footer>
                     <button
                             name="action_cancel"
@@ -45,6 +44,6 @@
                 res_model="wizard.stock.inventory.kanban"
                 view_mode="form"
                 context="{'default_inventory_kanban_id': active_id}"
-                target="new"/>
+                target="current"/>
 
 </odoo>

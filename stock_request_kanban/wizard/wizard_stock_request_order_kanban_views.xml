@@ -25,6 +25,6 @@
                 res_model="wizard.stock.request.order.kanban"
                 view_mode="form"
                 context="{'default_order_id': active_id}"
-                target="new"/>
+                target="current"/>
 
 </odoo>
