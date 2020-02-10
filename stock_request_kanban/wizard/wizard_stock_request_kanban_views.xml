@@ -43,6 +43,6 @@
                 name="Add Kanban"
                 res_model="wizard.stock.request.kanban"
                 view_mode="form"
-                target="current"/>
+                target="new"/>
 
 </odoo>

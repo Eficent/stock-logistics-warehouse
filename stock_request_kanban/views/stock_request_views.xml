@@ -17,7 +17,7 @@
         <field name="arch" type="xml">
             <tree position="attributes">
                 <attribute name="js_class">stock_request_kanban_list</attribute>
-                <attribute name="banner_route">/stock_request_kanban/kanban_code_reader</attribute>
+                <!--<attribute name="banner_route">/stock_request_kanban/kanban_code_reader</attribute>-->
             </tree>
         </field>
     </record>

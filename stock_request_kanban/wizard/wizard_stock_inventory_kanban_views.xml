@@ -44,6 +44,6 @@
                 res_model="wizard.stock.inventory.kanban"
                 view_mode="form"
                 context="{'default_inventory_kanban_id': active_id}"
-                target="current"/>
+                target="new"/>
 
 </odoo>
