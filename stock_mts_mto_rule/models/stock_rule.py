@@ -34,7 +34,6 @@ class StockRule(models.Model):
                     ) % (rule.name,)
                     raise ValidationError(msg)
 
-    @api.multi
     def get_mto_qty_to_order(self, product, product_qty, product_uom, values):
         self.ensure_one()
         precision = self.env["decimal.precision"].precision_get(
