@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-17 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# 2020 ForgeFlow S.L.
 # Copyright 2016 Serpent Consulting Services Pvt. Ltd.
-#   (<http://www.serpentcs.com>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 from odoo import api, fields, models, _
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import UserError
@@ -263,7 +259,7 @@ class StockInventoryRevaluation(models.Model):
             stock_valuation_account_id = datas.get('stock_valuation').id
         if not stock_valuation_account_id:
             raise UserError(_("Please add Stock Valuation Account in "
-                            "Product Category"))
+                              "Product Category"))
         if not self.decrease_account_id or not self.increase_account_id:
             raise UserError(_("Please add an Increase Account and "
                               "a Decrease Account."))
@@ -439,15 +435,15 @@ class StockInventoryRevaluationQuant(models.Model):
                                   readonly=True,
                                   related="quant_id.location_id")
 
-    qty = fields.Float('Quantity', readonly=True,
-                       related="quant_id.qty")
+    quantity = fields.Float('Quantity', readonly=True,
+                           related="quant_id.quantity")
 
     in_date = fields.Datetime('Incoming Date', readonly=True,
                               related="quant_id.in_date")
 
     current_cost = fields.Float('Current Cost',
                                 readonly=True,
-                                related="quant_id.cost")
+                                compute="_compute_current_cost")
 
     old_cost = fields.Float('Previous cost',
                             help='Shows the previous cost of the quant',
@@ -463,6 +459,10 @@ class StockInventoryRevaluationQuant(models.Model):
     company_id = fields.Many2one(
         comodel_name='res.company', string='Company', readonly=True,
         related="revaluation_id.company_id")
+
+    def _compute_current_cost(self):
+        for rec in self:
+            rec.current_cost = product_id.standard_price * quantity
 
     @api.model
     def get_total_value(self):

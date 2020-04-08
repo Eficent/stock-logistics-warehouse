@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-17 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# 2020 ForgeFlow S.L.
 # Copyright 2016 Serpent Consulting Services Pvt. Ltd.
-#   (<http://www.serpentcs.com>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
     "name": "Stock Inventory Revaluation",
     "summary": "Introduces inventory revaluation as single point to change "
                "the valuation of products.",
-    "version": "10.0.1.1.0",
-    "author": "Eficent Business and IT Consulting Services S.L., "
+    "version": "11.0.1.1.0",
+    "author": "ForgeFLow S.L., "
               "Serpent Consulting Services Pvt. Ltd.,"
               "Odoo Community Association (OCA)",
     "website": "http://www.eficent.com",

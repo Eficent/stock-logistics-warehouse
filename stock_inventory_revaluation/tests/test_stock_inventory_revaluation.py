@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-17 Eficent Business and IT Consulting Services S.L.
-#   (http://www.eficent.com)
+# 2020 ForgeFlow S.L.
 # Copyright 2016 Serpent Consulting Services Pvt. Ltd.
-#   (<http://www.serpentcs.com>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 from odoo.tests.common import TransactionCase
 from odoo import exceptions
 from datetime import datetime
@@ -37,7 +33,7 @@ class TestStockInventoryRevaluation(TransactionCase):
 
         # groups
         self.group_inventory_valuation = self.env.ref(
-            'stock_account.group_inventory_valuation')
+            'stock.group_stock_manager')
         self.group_stock_user = self.env.ref(
             'stock.group_stock_user')
 
@@ -265,7 +261,7 @@ class TestStockInventoryRevaluation(TransactionCase):
                                  'type Price Change.')
 
         quants = self.env['stock.quant'].search([('product_id', '=',
-                                                 self.product_real_1.id)])
+                                                  self.product_real_1.id)])
 
         # We should be able to delete the quants afterwards
         quants.with_context(force_unlink=True).unlink()
