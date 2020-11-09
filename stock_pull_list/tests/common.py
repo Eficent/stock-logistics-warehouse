@@ -20,10 +20,10 @@ class TestPullListCommon(TransactionCase):
         self.customer_loc = self.env.ref("stock.stock_location_customers")
 
         self.warehouse_2 = self.wh_obj.create(
-            {"code": "WH-T", "name": "Warehouse Test",}
+            {"code": "WH-T", "name": "Warehouse Test"}
         )
         self.product_a = self.env["product.product"].create(
-            {"name": "test product A", "default_code": "TEST-A", "type": "product",}
+            {"name": "test product A", "default_code": "TEST-A", "type": "product"}
         )
 
         route_vals = {
