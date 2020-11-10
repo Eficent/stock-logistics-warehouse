@@ -14,7 +14,7 @@ class PushedFlow(models.Model):
         new_move_vals = super(
             PushedFlow, self)._prepare_move_copy_values(
             move_to_copy, new_date)
-        if self.auto_create_group:
+        if self.auto_create_group and move_to_copy.backorder_id:
             group_data = self._prepare_auto_procurement_group_data()
             group = self.env['procurement.group'].create(group_data)
             new_move_vals['group_id'] = group.id
