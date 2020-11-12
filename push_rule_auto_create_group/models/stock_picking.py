@@ -10,11 +10,9 @@ class StockPicking(models.Model):
     def action_done(self):
         res = super(StockPicking, self).action_done()
         for picking in self.with_context(manual_push=True):
-            for move in picking.move_lines:
-                if move.backorder_id:
-                    move.first_backorder_move = True
-                    break
+            picking.move_lines[0].first_backorder_move = True
             picking.move_lines._push_apply()
+            break
         return res
 
 

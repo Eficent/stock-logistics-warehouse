@@ -11,6 +11,13 @@ class PushedFlow(models.Model):
     auto_create_group = fields.Boolean(string='Auto-create Procurement Group')
 
     def _prepare_move_copy_values(self, move_to_copy, new_date):
+        """
+        Create a procurement group for every picking, not every move.
+        We check we don't split pickings by move using the field
+        first_backorder_move.
+        For the other stock moves we just assign the group created in the
+        first move.
+        """
         new_move_vals = super(
             PushedFlow, self)._prepare_move_copy_values(
             move_to_copy, new_date)
