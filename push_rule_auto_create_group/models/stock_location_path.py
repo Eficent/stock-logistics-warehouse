@@ -41,14 +41,13 @@ class PushedFlow(models.Model):
         new_move_vals = super(
             PushedFlow, self)._prepare_move_copy_values(
             move_to_copy, new_date)
-        backorder_list = self.env.context.get('backorder_list', [])
-        if self.auto_create_group and move_to_copy.backorder_id and \
-            move_to_copy.backorder_id.id not in \
-            backorder_list:
+        if self.auto_create_group and not move_to_copy.picking_id.pushed_group_id and move_to_copy.purchase_line_id.order_id.group_picking_count:
             group_data = self._prepare_auto_procurement_group_data()
             group = self.env['procurement.group'].create(group_data)
             new_move_vals['group_id'] = group.id
-            backorder_list.append(move_to_copy.backorder_id.id)
+            move_to_copy.picking_id.pushed_group_id = group.id
+        elif move_to_copy.picking_id.pushed_group_id:
+            new_move_vals['group_id'] = move_to_copy.picking_id.pushed_group_id.id
         return new_move_vals
 
     @api.model
