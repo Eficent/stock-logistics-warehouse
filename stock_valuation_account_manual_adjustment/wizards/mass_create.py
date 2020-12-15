@@ -32,6 +32,14 @@ class StockValuationAccountMassAdjust(models.TransientModel):
         help="This text is copied to the journal entry.",
     )
 
+    def get_default_company_id(self):
+        return self.env['res.users'].browse([self.env.uid]).company_id.id
+
+    company_id = fields.Many2one('res.company', 'Company', required=True,
+                                 readonly=True, default=get_default_company_id,
+                                 help="The Company for which the "
+                                      "adjustment is made to")
+
     def _prepare_data(self, product):
         self.ensure_one()
         if self.increase_account_id:

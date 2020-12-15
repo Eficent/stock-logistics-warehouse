@@ -101,7 +101,7 @@ class StockValuationAccountManualAdjustment(models.Model):
                 property_inventory_revaluation_decrease_account_categ
 
     def _prepare_move_data(self, date_move, debit_move_line_data,
-                           credit_move_line_data):
+                           credit_move_line_data, company):
         self.ensure_one()
         line_data = ([(0, 0, debit_move_line_data)] +
                      [(0, 0, credit_move_line_data)])
@@ -109,29 +109,32 @@ class StockValuationAccountManualAdjustment(models.Model):
             'narration': self.remarks,
             'date': date_move,
             'ref': self.name,
+            'company_id': company.id,
             'journal_id': self.journal_id.id,
             'stock_valuation_account_manual_adjustment_id': self.id,
             'line_ids': line_data
         }
 
     def _prepare_debit_move_line_data(self, amount, account_id, prod,
-                                      date_move):
+                                      date_move, company):
         self.ensure_one()
         return {
             'name': '(%s) %s' % (self.name, prod.name),
             'date': date_move,
             'product_id': prod.id,
+            'company_id': company.id,
             'account_id': account_id,
             'debit': amount
         }
 
     def _prepare_credit_move_line_data(self, amount, account_id,
-                                       prod, date_move):
+                                       prod, date_move, company):
         self.ensure_one()
         return {
             'name': '(%s) %s' % (self.name, prod.name),
             'date': date_move,
             'product_id': prod.id,
+            'company_id': company.id,
             'account_id': account_id,
             'credit': amount
         }
@@ -153,12 +156,13 @@ class StockValuationAccountManualAdjustment(models.Model):
                 credit_account_id = self.increase_account_id.id
             debit_move_line_data = self._prepare_debit_move_line_data(
                 abs(adj.product_id.valuation_discrepancy),
-                debit_account_id, adj.product_id, today)
+                debit_account_id, adj.product_id, today, adj.company_id)
             credit_move_line_data = self._prepare_credit_move_line_data(
                 abs(adj.product_id.valuation_discrepancy),
-                credit_account_id, adj.product_id, today)
-            move_data = self._prepare_move_data(today, debit_move_line_data,
-                                                credit_move_line_data)
+                credit_account_id, adj.product_id, today, adj.company_id)
+            move_data = self._prepare_move_data(
+                today, debit_move_line_data, credit_move_line_data,
+                adj.company_id)
             move = self.env['account.move'].create(move_data)
             move.post()
             self.post_date = fields.Datetime.now()

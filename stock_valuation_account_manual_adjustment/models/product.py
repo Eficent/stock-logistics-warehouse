@@ -54,7 +54,7 @@ class ProductProduct(models.Model):
     @api.model
     def _get_accounting_valuation_by_product(self):
         accounting_val = {}
-        self.env.cr.execute("""
+        query = """
             SELECT aml.product_id, sum(debit) - sum(credit) AS
             valuation
             FROM account_move_line as aml
@@ -67,13 +67,17 @@ class ProductProduct(models.Model):
             AND ip.name = 'property_stock_valuation_account_id'
             AND 'account.account,' || aml.account_id =
             ip.value_reference)
+            AND aml.company_id = %%s %s
             GROUP BY aml.product_id
-        """)
+        """
+        params = (self.env.user.company_id.id, )
+        query = query % ("",)
+        self.env.cr.execute(query, params=params)
 
         for product_id, valuation in self.env.cr.fetchall():
             accounting_val[product_id] = valuation
 
-        self.env.cr.execute("""
+        query = """
             SELECT aml.product_id, sum(debit) - sum(credit)
             as valuation
             FROM account_move_line as aml
@@ -95,8 +99,13 @@ class ProductProduct(models.Model):
                 AND name =
                 'property_stock_valuation_account_id'
             )
+            AND aml.company_id = %%s %s
             GROUP BY aml.product_id
-        """)
+        """
+        params = (self.env.user.company_id.id, )
+        query = query % ("",)
+        self.env.cr.execute(query, params=params)
+
         for product_id, valuation in self.env.cr.fetchall():
             accounting_val[product_id] = valuation
         return accounting_val
@@ -109,7 +118,7 @@ class ProductProduct(models.Model):
     @api.model
     def _get_inventory_valuation_by_product(self):
         inventory_val = {}
-        self.env.cr.execute("""
+        query = """
             WITH Q1 AS (
                 SELECT pt.id, ip.value_text as cost_method
                 FROM product_template as pt
@@ -142,6 +151,7 @@ class ProductProduct(models.Model):
                 ON Q3.id = pr.product_tmpl_id
                 WHERE Q3.cost_method = 'real'
                 AND sl.usage = 'internal'
+                AND sq.company_id = %s
                 GROUP BY pr.id),
             Q5 AS (
                 SELECT pr.id, sum(sq.qty*ip.value_float) as valuation
@@ -159,6 +169,7 @@ class ProductProduct(models.Model):
                 ON (imf.id = ip.fields_id
                 AND imf.name = 'standard_price')
                 WHERE sl.usage = 'internal'
+                AND sq.company_id = %s
                 GROUP BY pr.id),
             Q6 AS (
                 SELECT * FROM Q4 UNION ALL SELECT * FROM Q5),
@@ -168,7 +179,10 @@ class ProductProduct(models.Model):
                 WHERE pr.id NOT IN (select id from Q6))
             SELECT *
             FROM Q7
-        """)
+        """
+        params = (self.env.user.company_id.id, self.env.user.company_id.id)
+        self.env.cr.execute(query, params=params)
+
         for product_id, valuation in self.env.cr.fetchall():
             inventory_val[product_id] = valuation
         return inventory_val
