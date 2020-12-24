@@ -55,14 +55,18 @@ class StockValuationAccountMassAdjust(models.TransientModel):
             decrease_account = product.categ_id and \
                 product.categ_id.with_context(force_company=self.env.user.company_id.id).\
                 property_inventory_revaluation_decrease_account_categ
-
+        if self.env.context.get('valuation_discrepancy', False):
+            valuation_discrepancy = self.env.context.get(
+                'valuation_discrepancy')
+        else:
+            valuation_discrepancy = product.valuation_discrepancy
         return {
             'increase_account_id': increase_account.id,
             'decrease_account_id': decrease_account.id,
             'journal_id': self.journal_id.id,
             'remarks': self.remarks,
             'product_id': product.id,
-            'amount': product.valuation_discrepancy
+            'amount': valuation_discrepancy
         }
 
     @api.multi
@@ -83,8 +87,9 @@ class StockValuationAccountMassAdjust(models.TransientModel):
 
         rec_ids = []
         for product in products:
-            if not product.valuation_discrepancy:
-                continue
+            if not self.env.context.get('valuation_discrepancy', False):
+                if not product.valuation_discrepancy:
+                    continue
             data = self._prepare_data(product)
             rec = self.env['stock.valuation.account.manual.adjustment'].create(
                 data)
