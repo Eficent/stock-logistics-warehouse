@@ -46,14 +46,16 @@ class StockValuationAccountMassAdjust(models.TransientModel):
             increase_account = self.increase_account_id
         else:
             increase_account = product.categ_id and \
-                product.categ_id.with_context(force_company=self.env.user.company_id.id).\
+                product.categ_id.with_context(
+                    force_company=self.env.user.company_id.id).\
                 property_inventory_revaluation_increase_account_categ
 
         if self.decrease_account_id:
             decrease_account = self.decrease_account_id
         else:
             decrease_account = product.categ_id and \
-                product.categ_id.with_context(force_company=self.env.user.company_id.id).\
+                product.categ_id.with_context(
+                    force_company=self.env.user.company_id.id).\
                 property_inventory_revaluation_decrease_account_categ
         if self.env.context.get('valuation_discrepancy', False):
             valuation_discrepancy = self.env.context.get(
