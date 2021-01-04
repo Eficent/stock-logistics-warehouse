@@ -69,11 +69,11 @@ class TestStockWarehouseCalendar(TransactionCase):
         move = self.env["stock.move"].search(
             [("product_id", "=", self.product.id)], limit=1
         )
-        date_expected = fields.Date.to_date(move.date_expected)
+        date_deadline = fields.Date.to_date(move.date_deadline)
         # Friday 4th Jan 2017
         friday = fields.Date.to_date("2097-01-04 09:00:00")
 
-        self.assertEquals(date_expected, friday)
+        self.assertEqual(date_deadline, friday)
 
     def test_02_procurement_with_calendar_early(self):
         """Test procuring at the beginning of the day, with no work intervals
@@ -101,11 +101,11 @@ class TestStockWarehouseCalendar(TransactionCase):
         move = self.env["stock.move"].search(
             [("product_id", "=", self.product.id)], limit=1
         )
-        date_expected = fields.Date.to_date(move.date_expected)
+        date_deadline = fields.Date.to_date(move.date_deadline)
         # Friday 4th Jan 2017
         friday = fields.Date.to_date("2097-01-04 09:00:00")
 
-        self.assertEquals(date_expected, friday)
+        self.assertEqual(date_deadline, friday)
 
     def test_03_wh_plan_days_future(self):
         """Test plan days helper in warehouse."""
@@ -113,8 +113,8 @@ class TestStockWarehouseCalendar(TransactionCase):
         # With calendar
         result = self.warehouse_2.wh_plan_days(reference, 3).date()
         next_monday = fields.Date.to_date("2097-01-14")
-        self.assertEquals(result, next_monday)
+        self.assertEqual(result, next_monday)
         # Without calendar
         result = self.warehouse_3.wh_plan_days(reference, 3).date()
         saturday = fields.Date.to_date("2097-01-12")
-        self.assertEquals(result, saturday)
+        self.assertEqual(result, saturday)
