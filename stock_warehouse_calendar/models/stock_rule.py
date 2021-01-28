@@ -32,10 +32,10 @@ class StockRule(models.Model):
         )
         warehouse = self.propagate_warehouse_id or self.warehouse_id
         if warehouse.calendar_id and self.delay:
-            date_expected = warehouse.wh_plan_days(
+            date_deadline = warehouse.wh_plan_days(
                 values["date_planned"], -1 * self.delay
             )
-            if date_expected > datetime.now():
-                res["date"] = date_expected
-                res["date_expected"] = date_expected
+            if date_deadline > datetime.now():
+                res["date"] = date_deadline
+                res["date_deadline"] = date_deadline
         return res
